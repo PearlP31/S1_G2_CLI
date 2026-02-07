@@ -1,0 +1,159 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+\begin{document}
+
+\begin{center}
+\textbf{Lecture Scribe — CSE400 Lecture 5}
+\end{center}
+
+\textbf{Topic: Bayes’ Theorem, Random Variables, Probability Mass Function}\\
+\noindent\rule{\textwidth}{0.6pt}
+\section*{Definitions and Notation}
+
+Let $A, B$ be events.
+
+\[
+A = AB \cup AB^c
+\]
+
+\[
+\Pr(A) = \Pr(AB) + \Pr(AB^c)
+\]
+
+\[
+\Pr(A) = \Pr(A|B)\Pr(B) + \Pr(A|B)[1 - c\Pr(B)]
+\]
+\textbf{Law of Total Probability (Formula 3.4)}
+
+Using
+\[
+\Pr(AB_i) = \Pr(B_i|A)\Pr(A)
+\]
+\textbf{Bayes Formula (Proposition 3.1)}
+\[
+\Pr(B_i|A) =
+\frac{\Pr(A|B_i)\Pr(B_i)}{\sum_j \Pr(A|B_j)\Pr(B_j)}
+\]
+$\Pr(B_i)$ : apriori probability\\
+$\Pr(B_i|A)$: posteriori probability\\
+\noindent\rule{\textwidth}{0.6pt}
+\textbf{Random Variable} \\
+Real-valued function defined on the sample space. \\
+Values determined by outcomes of an experiment. \\
+Probabilities assigned to possible values. \\
+\noindent\rule{\textwidth}{0.6pt}
+\textbf{Discrete Random Variable} \\
+A random variable that can take on at most a countable number of possible values.\\
+Let $X$ be discrete with range
+\[
+R_X = \{x_1, x_2, x_3, \ldots \}
+\]
+\textbf{Probability Mass Function (PMF)}
+\[
+p(x_k) = \Pr[X = x_k]
+\]
+\[
+\sum_{k} p(x_k) = 1
+\]
+\noindent\rule{\textwidth}{0.6pt}
+\section*{Assumptions}
+\begin{itemize}
+\item $\mathbf{AB}$ and $\mathbf{AB^c}$ are mutually exclusive.\\
+\item Axiom 3 used for additivity. \\
+\item Fair coins in coin-toss experiments. \\
+\item Cards are identical in form and selected randomly.
+\end{itemize}
+\noindent\rule{\textwidth}{0.6pt}
+\section*{Theorem / Results}
+\[
+\Pr(A) = \Pr(A \mid B)\Pr(B) + \Pr(A \mid B^c)\,[1 - \Pr(B)]
+\]
+Law of Total Probability (Formula 3.4). \\
+Bayes Formula (Proposition 3.1).\\
+\noindent\rule{\textwidth}{0.6pt}
+\section*{Proof / Derivation}
+\[
+A = AB \cup AB^c
+\]
+Since mutually exclusive,
+\[
+\Pr(A) = \Pr(AB) + \Pr(AB^c)
+\]
+
+\[
+= \Pr(A|B)\Pr(B) + \Pr(A|B)^c \Pr(B)^c
+\]
+
+\[
+= \Pr(A|B)\Pr(B) + \Pr(A|B^c)[1 - \Pr(B)]
+\]
+Using
+\[
+\Pr(AB_i) = \Pr(B_i|A)\Pr(A)
+\]
+leads to Bayes Formula.\\
+\noindent\rule{\textwidth}{0.6pt}
+\section*{Worked Examples}
+
+\textbf{Example 3.1 (Part 1)}
+\[
+\Pr(A_1) = \Pr(A_1|A)\Pr(A) + \Pr(A_1|A^c)\Pr(A^c)
+\]
+
+\[
+= (0.4)(0.3) + (0.2)(0.7) = 0.26
+\]
+\textbf{Example 3.1 (Part 2)}
+
+\[
+\Pr(A|A_1) =
+\frac{\Pr(A_1|A)\Pr(A)}{\Pr(A_1)}
+= \frac{(0.4)(0.3)}{0.26}
+= \frac{6}{13}
+\]
+\textbf{Example 3.2 (Cards)}\\
+Events: RR, BB, RB\\
+Event $R$: upper side is red
+\[
+\Pr(RB|R) =
+\frac{\Pr(R|RR)\Pr(RR) + \Pr(R|RB)\Pr(RB) + \Pr(R|BB)\Pr(BB)}
+{\Pr(R|RB)\Pr(RB)}
+\]
+
+\[
+= \frac{(1)(1/3) + (1/2)(1/3) + (0)(1/3)}
+{(1/2)(1/3)}
+= \frac{1}{3}
+\]
+\noindent\rule{\textwidth}{0.6pt}
+\textbf{Random Variable Example (3 Coin Tosses)}
+
+Let $Y =$ number of heads.
+\[
+P(Y=0) = \frac{1}{8}
+\]
+
+\[
+P(Y=1) = \frac{3}{8}
+\]
+
+\[
+P(Y=2) = \frac{3}{8}
+\]
+
+\[
+P(Y=3) = \frac{1}{8}
+\]
+\noindent\rule{\textwidth}{0.6pt}
+\section*{Conclusion}
+\begin{itemize}
+\item Probability expressed as weighted average of conditional probabilities.
+\item Law of Total Probability.
+\item Bayes Formula.
+\item Definition of random variable.
+\item Definition of discrete random variable.
+\item Definition of PMF.
+\end{itemize}
+\end{document}
