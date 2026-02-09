@@ -1,0 +1,189 @@
+\documentclass[11pt]{article}
+
+% ===================== PACKAGES =====================
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+% ===================== THEOREM ENVIRONMENTS =====================
+\newtheorem{definition}{Definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{example}{Example}
+
+% ===================== DOCUMENT =====================
+\begin{document}
+
+\begin{center}
+\textbf{\Large Lecture 9 Scribe}\\[0.2cm]
+\textbf{Course: CSE400 -- Fundamentals of Probability in Computing}\\
+\textbf{Topic: Uniform, Exponential, Laplace, and Gamma Random Variables}
+\end{center}
+
+\section{Continuous Random Variables}
+
+A continuous random variable (RV) is characterized by a probability density function (PDF) $f_X(x)$ such that:
+\[
+f_X(x) \ge 0, \quad \int_{-\infty}^{\infty} f_X(x)\,dx = 1.
+\]
+
+The cumulative distribution function (CDF) is:
+\[
+F_X(x) = \Pr(X \le x) = \int_{-\infty}^{x} f_X(t)\,dt.
+\]
+
+\section{Uniform Random Variable}
+
+\begin{definition}
+A random variable $X \sim \text{Uniform}(a,b)$, where $a<b$, has PDF
+\[
+f_X(x) =
+\begin{cases}
+\dfrac{1}{b-a}, & a < x < b,\\
+0, & \text{elsewhere}.
+\end{cases}
+\]
+\end{definition}
+
+The CDF is given by:
+\[
+F_X(x) =
+\begin{cases}
+0, & x < a,\\
+\dfrac{x-a}{b-a}, & a < x < b,\\
+1, & x > b.
+\end{cases}
+\]
+
+\begin{example}
+Let $\Theta \sim \text{Uniform}(0,2\pi)$.
+\[
+f_\Theta(\theta) =
+\begin{cases}
+\dfrac{1}{2\pi}, & 0 < \theta < 2\pi,\\
+0, & \text{otherwise}.
+\end{cases}
+\]
+\end{example}
+
+\subsection*{(a) Finding $\Pr(\Theta > 3\pi/2)$}
+
+\[
+\Pr(\Theta > 3\pi/2)
+= \int_{3\pi/2}^{2\pi} \frac{1}{2\pi}\, d\theta
+= \frac{2\pi - 3\pi/2}{2\pi}
+= \frac{1}{4}.
+\]
+
+\subsection*{(b) Finding $\Pr(\pi < \Theta < 3\pi/2)$}
+
+\[
+\Pr(\pi < \Theta < 3\pi/2)
+= \int_{\pi}^{3\pi/2} \frac{1}{2\pi}\, d\theta
+= \frac{3\pi/2 - \pi}{2\pi}
+= \frac{1}{4}.
+\]
+
+\subsection*{(c) Finding $\Pr(\cos \Theta < 0)$}
+
+\[
+\cos \Theta < 0 \quad \text{for } \Theta \in \left(\frac{\pi}{2}, \frac{3\pi}{2}\right).
+\]
+
+\[
+\Pr(\cos \Theta < 0)
+= \int_{\pi/2}^{3\pi/2} \frac{1}{2\pi}\, d\theta
+= \frac{\pi}{2\pi}
+= \frac{1}{2}.
+\]
+
+\section{Exponential Random Variable}
+
+\begin{definition}
+A random variable $X \sim \text{Exponential}(\lambda)$, $\lambda > 0$, has PDF
+\[
+f_X(x) =
+\begin{cases}
+\lambda e^{-\lambda x}, & x \ge 0,\\
+0, & x < 0.
+\end{cases}
+\]
+\end{definition}
+
+The CDF is:
+\[
+F_X(x) = 1 - e^{-\lambda x}, \quad x \ge 0.
+\]
+
+\section{Laplace Random Variable}
+
+\begin{definition}
+A Laplace random variable with mean $\mu$ and scale $b>0$ has PDF
+\[
+f_X(x) = \frac{1}{2b} e^{-\frac{|x-\mu|}{b}}, \quad -\infty < x < \infty.
+\]
+\end{definition}
+
+The distribution is symmetric about $\mu$.
+
+\section{Gamma Random Variable}
+
+\begin{definition}
+A random variable $X \sim \text{Gamma}(\alpha,\beta)$, $\alpha>0$, $\beta>0$, has PDF
+\[
+f_X(x) =
+\begin{cases}
+\dfrac{1}{\Gamma(\alpha)\beta^\alpha} x^{\alpha-1} e^{-x/\beta}, & x>0,\\
+0, & x \le 0.
+\end{cases}
+\]
+\end{definition}
+
+where
+\[
+\Gamma(\alpha) = \int_{0}^{\infty} t^{\alpha-1} e^{-t}\, dt.
+\]
+
+\subsection*{Special Case}
+
+If $\alpha = 1$, then
+\[
+\text{Gamma}(1,\beta) \equiv \text{Exponential}(\lambda = 1/\beta).
+\]
+
+\section{Relationships Between Distributions}
+
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Distribution & Support & Shape \\
+\hline
+Uniform & Finite interval & Constant PDF \\
+Exponential & $x \ge 0$ & Monotonically decreasing \\
+Laplace & $(-\infty,\infty)$ & Double-exponential, symmetric \\
+Gamma & $x>0$ & Generalization of exponential \\
+\hline
+\end{tabular}
+\end{center}
+
+\section{Logical Flow of Concepts}
+
+\[
+\text{Continuous RV}
+\;\rightarrow\;
+\text{PDF \& CDF}
+\;\rightarrow\;
+\text{Uniform}
+\;\rightarrow\;
+\text{Exponential}
+\;\rightarrow\;
+\text{Laplace}
+\;\rightarrow\;
+\text{Gamma}.
+\]
+
+\end{document}
