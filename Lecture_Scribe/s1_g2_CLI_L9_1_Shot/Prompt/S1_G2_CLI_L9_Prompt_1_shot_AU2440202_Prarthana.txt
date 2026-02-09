@@ -1,0 +1,2 @@
+Prompt for the lecture 9 scribe:
+Using the same structure as the example above, generate a lecture scribe for the provided context. The lecture scribe must be written as exam-oriented reference material. Use only the provided lecture slides. Include content only if it appears in the lecture material. Do not add new definitions, examples, explanations, intuition, or interpretations.
