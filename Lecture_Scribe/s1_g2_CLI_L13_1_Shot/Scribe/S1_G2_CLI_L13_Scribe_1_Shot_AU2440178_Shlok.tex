@@ -1,0 +1,283 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\geometry{margin=1in}
+
+\title{CSE 400: Fundamentals of Probability in Computing\\
+Tutorial--1 Solution}
+\author{School of Engineering and Applied Science (SEAS)\\
+Ahmedabad University}
+\date{February 13, 2026}
+
+\begin{document}
+
+\maketitle
+
+\section*{Definitions and Notation}
+
+\subsection*{Multinomial Formula}
+\[
+\frac{n!}{n_1! n_2! \dots n_k!}
+\]
+
+\subsection*{Uniform Distribution}
+Arrival time uniformly distributed over an interval.
+
+\subsection*{Complement Rule}
+\[
+P(A^c) = 1 - P(A)
+\]
+
+\subsection*{Inclusion--Exclusion Principle}
+\[
+P(A \cup B) = P(A) + P(B) - P(A \cap B)
+\]
+
+\subsection*{De Morgan's Law}
+\[
+P(A^c \cap B^c) = 1 - P(A \cup B)
+\]
+
+\subsection*{Poisson Distribution}
+If $X \sim \text{Poisson}(\lambda)$,
+\[
+P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}
+\]
+
+\subsection*{Gaussian (Normal) Distribution}
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}} 
+\exp\left(-\frac{(x-m)^2}{2\sigma^2}\right)
+\]
+
+\[
+F_X(x) = \Phi\left(\frac{x-m}{\sigma}\right),
+\quad
+P(X > x) = Q\left(\frac{x-m}{\sigma}\right)
+\]
+
+\subsection*{Binomial Distribution}
+\[
+P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
+\]
+
+\subsection*{Cumulative Distribution Function (Discrete)}
+\[
+F(a) = \sum_{x \le a} p(x)
+\]
+
+\section*{Assumptions}
+
+\begin{itemize}
+\item Order within groups does not matter and groups are unlabeled (Q1).
+\item Arrival time is uniformly distributed over 30 minutes (Q2).
+\item Independence of events where stated (Q8, Q10).
+\item Poisson model applies for rare events in fixed intervals (Q4--Q6).
+\item Jurors act independently with probability $\theta$ (Q8).
+\item System components function independently with probability $p$ (Q10).
+\end{itemize}
+
+\section*{Theorems / Results}
+
+\subsection*{Multinomial Counting Result}
+\[
+\frac{20!}{(5!)^4 4!}
+\]
+
+\subsection*{Poisson Complement}
+\[
+P(X \ge k) = 1 - \sum_{i=0}^{k-1} P(X=i)
+\]
+
+\subsection*{Gaussian Symmetry}
+\[
+\Phi(-x) = 1 - \Phi(x)
+\]
+
+\subsection*{Condition for Larger System Reliability}
+\[
+p > \frac{1}{2}
+\]
+
+\section*{Proofs / Derivations}
+
+\subsection*{Q1}
+
+\[
+\frac{20!}{(5!)^4 4!}
+\]
+
+Probability:
+\[
+P = \frac{(5!)^4 4!}{20!}
+\]
+
+\subsection*{Q2}
+
+Total interval = 30 minutes.
+
+\[
+P = \frac{10}{30} = \frac{1}{3}
+\]
+
+\subsection*{Q3}
+
+Given:
+\[
+P(L)=0.15, \quad P(E)=0.25, \quad P(L \cap E)=0.08
+\]
+
+\[
+P(E^c)=0.75
+\]
+
+\[
+P(L \cup E)=0.15+0.25-0.08=0.32
+\]
+
+\[
+P(L^c \cap E^c)=1-0.32=0.68
+\]
+
+\[
+P(L^c | E^c)=\frac{0.68}{0.75}\approx 0.907
+\]
+
+\subsection*{Q4 ($\lambda=0.2$)}
+
+\[
+P(0)=e^{-0.2}=0.8187
+\]
+
+\[
+P(1)=0.2 e^{-0.2}=0.1637
+\]
+
+\[
+P(X \ge 2)=1-0.8187-0.1637=0.0176
+\]
+
+\subsection*{Q5 ($\lambda=3.5$)}
+
+\[
+P(0)=e^{-3.5}=0.0302
+\]
+
+\[
+P(1)=3.5 e^{-3.5}=0.1057
+\]
+
+\[
+P(X \ge 2)=0.8641
+\]
+
+\[
+P(X \le 1)=0.1359
+\]
+
+\subsection*{Q6 ($\lambda=3$)}
+
+\[
+P(0)=0.0498
+\]
+
+\[
+P(1)=0.1494
+\]
+
+\[
+P(2)=0.2240
+\]
+
+\[
+P(X \ge 3)=0.5768
+\]
+
+\[
+P(X \ge 3 | X \ge 1)=\frac{0.5768}{0.9502}\approx 0.607
+\]
+
+\subsection*{Q7 ($m=-3, \sigma=2$)}
+
+\[
+P(X \le 0)=\Phi\left(\frac{3}{2}\right)
+\]
+
+\[
+P(X > 4)=Q\left(\frac{7}{2}\right)
+\]
+
+\[
+P(|X+3|<2)=2\Phi(1)-1
+\]
+
+\[
+P(|X-2|>1)=1-Q(2)+Q(3)
+\]
+
+\subsection*{Q8 (Jury Problem)}
+
+If innocent:
+\[
+\sum_{i=5}^{12} \binom{12}{i} \theta^i (1-\theta)^{12-i}
+\]
+
+If guilty:
+\[
+\sum_{i=8}^{12} \binom{12}{i} \theta^i (1-\theta)^{12-i}
+\]
+
+Overall:
+\[
+\alpha \sum_{i=8}^{12} \binom{12}{i} \theta^i (1-\theta)^{12-i}
++
+(1-\alpha) \sum_{i=5}^{12} \binom{12}{i} \theta^i (1-\theta)^{12-i}
+\]
+
+\subsection*{Q9}
+
+\[
+c e^{\lambda}=1 \Rightarrow c=e^{-\lambda}
+\]
+
+\[
+P(0)=e^{-\lambda}
+\]
+
+\[
+P(X>2)=1-e^{-\lambda}-\lambda e^{-\lambda}-\frac{\lambda^2}{2}e^{-\lambda}
+\]
+
+\subsection*{Q10}
+
+5-component system:
+\[
+10p^3(1-p)^2 + 5p^4(1-p) + p^5
+\]
+
+3-component system:
+\[
+3p^2(1-p)+p^3
+\]
+
+Condition:
+\[
+3(p-1)^2(2p-1) > 0
+\]
+
+\[
+p > \frac{1}{2}
+\]
+
+\section*{Conclusion}
+
+\begin{itemize}
+\item Multinomial counting applied for equal partitioning.
+\item Complement rule used for Poisson tail probabilities.
+\item Conditional probability applied using complements and inclusion--exclusion.
+\item Gaussian probabilities expressed using $\Phi$ and $Q$ functions.
+\item Larger odd-component systems are better when $p > \frac{1}{2}$.
+\end{itemize}
+
+\end{document}
