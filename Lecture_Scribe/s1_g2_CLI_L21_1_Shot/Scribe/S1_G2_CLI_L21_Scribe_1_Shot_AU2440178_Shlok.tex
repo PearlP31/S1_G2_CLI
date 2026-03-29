@@ -1,0 +1,239 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{enumitem}
+
+\title{Lecture Scribe:\\ CSE400 -- Fundamentals of Probability in Computing\\
+Lectures 21--22: Inequalities and Tail Bounds}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Definitions and Notation}
+
+\textbf{Tail of a random variable:}
+\[
+P(X > x)
+\]
+
+\textbf{Running Example:}  
+\[
+X \sim \text{Binomial}(n, \tfrac12), \qquad E[X] = \frac{n}{2}
+\]
+
+\section{Assumptions}
+
+\textbf{Markov's inequality assumes:}
+\[
+X \ge 0
+\]
+
+\textbf{Chebyshev's inequality assumes:}
+\[
+E[X] = \mu, \qquad \text{Var}(X) = \sigma^2
+\]
+
+\textbf{Chernoff bounds assume:}
+\begin{itemize}[noitemsep]
+    \item Use moment generating functions (MGFs)
+    \item $t>0$ for upper tail
+    \item $t<0$ for lower tail
+\end{itemize}
+
+\textbf{Jensen's inequality assumes:}
+\[
+g(x) \text{ is convex on interval } S, \qquad X \in S
+\]
+
+\section{Theorems / Results}
+
+\subsection*{Markov's Inequality}
+For any $X \ge 0$:
+\[
+P(X > a) < \frac{E[X]}{a}
+\]
+
+\subsection*{Chebyshev's Inequality}
+\[
+P(|X - \mu| > a) < \frac{\sigma^2}{a^2}
+\]
+Derived using Markov's inequality on $(X-\mu)^2$.
+
+\subsection*{Chernoff Bound (General Form)}
+
+\textbf{Upper tail:}
+\[
+P(X > a) < \min_{t>0} \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\textbf{Lower tail:}
+\[
+P(X < a) < \min_{t<0} \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\subsection*{Chernoff Bound for Poisson}
+
+If $X\sim\text{Poisson}(\lambda)$, then its MGF:
+\[
+E[e^{tX}] = e^{\lambda(e^t - 1)}
+\]
+
+Final tail bound for $a > \lambda$:
+\[
+P(X > a) < \exp\!\left(\lambda(e^{\ln(a/\lambda)} - 1) - a\ln(a/\lambda)\right)
+\]
+
+\subsection*{Jensen's Inequality}
+If $g(x)$ is convex:
+\[
+g(E[X]) \le E[g(X)]
+\]
+
+\section{Proofs / Derivations}
+
+\subsection*{Markov Inequality Proof}
+
+Start:
+\[
+E[X] = \sum_{x\ge 0} x\, p_X(x)
+\]
+
+For $x>a$, replace $x$ by $a$:
+\[
+E[X] \ge \sum_{x>a} a\, p_X(x) = a\,P(X>a)
+\]
+
+Thus:
+\[
+P(X>a) < \frac{E[X]}{a}
+\]
+
+\subsection*{Chebyshev Proof}
+
+Apply Markov to $Y = (X-\mu)^2$:
+\[
+P(|X-\mu|>a) = P((X-\mu)^2 > a^2)
+\]
+\[
+< \frac{E[(X-\mu)^2]}{a^2} = \frac{\sigma^2}{a^2}
+\]
+
+\subsection*{Chernoff Core Trick}
+
+\[
+P(X>a) = P(e^{tX} > e^{ta})
+\]
+
+By Markov:
+\[
+P(X>a) < \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+Optimize over $t>0$.
+
+\subsection*{Poisson MGF Derivation}
+
+\[
+E[e^{tX}]
+= e^{-\lambda} \sum_{x=0}^{\infty} \frac{\lambda^x}{x!} e^{tx}
+= e^{-\lambda} \sum_{x=0}^\infty \frac{(\lambda e^t)^x}{x!}
+\]
+\[
+= e^{-\lambda} e^{\lambda e^t}
+= e^{\lambda(e^t - 1)}
+\]
+
+\subsection*{Jensen Derivation}
+
+Convexity implies:
+\[
+g\left(\sum_i a_i x_i\right) \le \sum_i a_i g(x_i)
+\]
+
+Using probability weights:
+\[
+g(E[X]) \le E[g(X)]
+\]
+
+\section{Worked Examples}
+
+\subsection*{Markov Example 1: Exam Grades}
+
+Given $E[X]=70$, $a=90$:
+\[
+P(X>90) < \frac{70}{90} = \frac79
+\]
+
+\subsection*{Markov Example 2: Server Load}
+
+Given $E[X]=5000$, $a=20000$:
+\[
+P(X>20000) < \frac{5000}{20000} = 0.25
+\]
+
+\subsection*{Chebyshev Example 1}
+
+\[
+\mu=70,\ \sigma^2=25,\ a=20
+\]
+\[
+P(|X-70|>20) < \frac{25}{400} = 0.0625
+\]
+
+\subsection*{Chebyshev Example 2}
+
+\[
+\mu=50,\ \sigma^2=16,\ a=20
+\]
+\[
+P(|X-50|>20) < \frac{16}{400} = 0.04
+\]
+
+\subsection*{Chernoff Example 1: Binomial Lower Tail}
+
+\[
+X\sim \text{Binomial}(20,0.5),\quad \mu=10,\quad (1-\delta)\mu = 0 \Rightarrow \delta=1
+\]
+\[
+P(X<0) < e^{-\delta^2 \mu / 2} = e^{-5}
+\]
+
+\subsection*{Chernoff Example 2: Lower Tail Steps}
+
+\[
+t<0,\quad P(X<a) = P(tX > ta)
+\]
+\[
+P(e^{tX} > e^{ta})
+\]
+Apply Markov:
+\[
+P(X<a) < \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\subsection*{Jensen Example}
+
+For $X=2,4$ with probability $0.5$:
+\[
+E[X]=3
+\]
+\[
+g(E[X]) = 9,\qquad E[g(X)] = 10
+\]
+\[
+9 < 10
+\]
+
+\section{Conclusion}
+
+\begin{itemize}
+    \item Defined tails: $P(X>x)$
+    \item Presented Markov, Chebyshev, Chernoff, and Jensen inequalities
+    \item Derived each exactly as shown in lecture
+    \item Included Poisson MGF and Poisson Chernoff bound
+    \item Verified Jensen's inequality with example
+\end{itemize}
+
+\end{document}
