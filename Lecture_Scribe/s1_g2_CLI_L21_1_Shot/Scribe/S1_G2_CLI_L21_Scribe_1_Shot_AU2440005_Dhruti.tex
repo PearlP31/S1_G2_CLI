@@ -1,0 +1,365 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb}
+
+\title{CSE400 – Fundamentals of Probability in Computing}
+\author{Scribe: Inequalities and Tail Bounds (Lectures 21–22)}
+\date{Instructor: Dhaval Patel}
+
+\begin{document}
+
+\maketitle
+
+\section*{1. Tails and Motivation}
+
+\subsection*{Definition 1.1 (Tail of a Random Variable)}
+
+The tail of a random variable $( X )$ is
+\[
+P\{X > x\}
+\]
+
+\subsection*{Motivation}
+
+\begin{itemize}
+\item Jobs delayed more than 24 hours
+\item Packets dropped due to full buffer
+\end{itemize}
+
+\textbf{Key Idea:}
+
+\begin{itemize}
+\item Mean — average behavior (easy)
+\item Tail — rare extreme events (hard)
+\end{itemize}
+
+\textbf{Why tails are hard to compute:}
+
+\begin{itemize}
+\item Requires summing many small probabilities
+\end{itemize}
+
+\section*{2. Tail Examples}
+
+\subsection*{Example 2.1 (Binomial Tail)}
+
+Suppose $( n )$ jobs are distributed among $( n )$ servers randomly.
+
+\begin{itemize}
+\item Let $( X \sim \text{Binomial}(n,p) )$
+\item Probability of overload:
+\[
+P\{X > k\} = \sum \binom{n}{i} p^i (1-p)^{n-i}
+\]
+\end{itemize}
+
+This is a tail event (rare overload).
+
+\subsection*{Example 2.2 (Poisson Tail)}
+
+Jobs arrive according to a Poisson process with rate $( \lambda )$.
+
+\begin{itemize}
+\item $( X \sim \text{Poisson}(\lambda) )$
+\item Tail probability:
+\[
+P\{X > k\}
+\]
+\end{itemize}
+
+This is a tail event (sudden spike in load).
+
+\section*{3. Why Tail Bounds}
+
+\subsection*{Observation}
+
+Exact tail probabilities are often hard to compute:
+\[
+P\{X > k\} = \sum \cdots
+\]
+
+\textbf{Idea:}
+
+\begin{itemize}
+\item Instead of exact value, find an upper bound
+\item Easier to compute
+\item Still gives a guarantee
+\end{itemize}
+
+\subsection*{Running Example}
+
+\begin{itemize}
+\item $( X \sim \text{Binomial}(n, 1/2) )$
+\item $( E[X] = n/2 )$
+\item Question:
+\[
+P(X > 3n/4)
+\]
+\end{itemize}
+
+\section*{4. Markov’s Inequality}
+
+\subsection*{Key Idea}
+
+\begin{itemize}
+\item Uses only the mean
+\item Large values $\Rightarrow$ rare
+\end{itemize}
+
+\subsection*{Theorem 4.1 (Markov’s Inequality)}
+
+For a non-negative random variable $( X )$,
+\[
+P(X > a) < \frac{E[X]}{a}
+\]
+
+\subsection*{Proof (Idea)}
+
+\begin{itemize}
+\item Consider only $( X > a )$
+\item Replace $( X )$ by $( a )$
+\end{itemize}
+
+\[
+E[X] = \sum x \cdot p_X(x)
+\]
+\[
+\ge \sum_{x \ge a} x \cdot p_X(x)
+\]
+\[
+\ge a \cdot P(X > a)
+\]
+\[
+\Rightarrow P(X > a) < \frac{E[X]}{a}
+\]
+
+\subsection*{Example 4.1 (Running Example)}
+
+\begin{itemize}
+\item $( X \sim \text{Binomial}(n,1/2) )$
+\item $( E[X] = n/2 )$
+\end{itemize}
+
+\[
+P(X > 3n/4) < \frac{E[X]}{3n/4}
+\]
+
+\subsection*{Solved Example 4.2 (Exam Grades)}
+
+\begin{itemize}
+\item $( E[X] = 70 )$, threshold $( a = 90 )$
+\end{itemize}
+
+Steps:
+
+\begin{enumerate}
+\item Let $( X > 0 )$, $( E[X] = 70 )$
+\item Apply Markov:
+\[
+P(X > a) < \frac{E[X]}{a}
+\]
+\item Substitute:
+\[
+P(X > 90) < \frac{70}{90}
+\]
+\item Simplify:
+\[
+P(X > 90) < 0.778
+\]
+\end{enumerate}
+
+\textbf{Result:} At most 77.8\% receive an A.
+
+\subsection*{Solved Example 4.3 (Server Load)}
+
+\begin{itemize}
+\item $( E[X] = 5000 )$, $( a = 20000 )$
+\end{itemize}
+
+Steps:
+
+\begin{enumerate}
+\item $( X = )$ requests/sec
+\item $( a = 20000 )$
+\item Apply Markov:
+\[
+P(X > a) < \frac{E[X]}{a}
+\]
+\item Substitute:
+\[
+P(X > 20000) < \frac{5000}{20000}
+\]
+\end{enumerate}
+
+\textbf{Result:}
+\[
+P(X > 20000) < 0.25
+\]
+
+\section*{5. Chebyshev’s Inequality}
+
+\subsection*{Key Idea}
+
+\begin{itemize}
+\item Uses mean + variance
+\item Controls deviation from mean
+\end{itemize}
+
+\subsection*{Theorem 5.1 (Chebyshev’s Inequality)}
+
+\[
+P(|X - \mu| > a) < \frac{\text{Var}(X)}{a^2}
+\]
+
+\subsection*{Proof (Idea)}
+
+Apply Markov’s inequality to $( (X - \mu)^2 )$:
+\[
+P(|X - \mu| > a) = P((X-\mu)^2 > a^2)
+\]
+\[
+< \frac{E[(X-\mu)^2]}{a^2} = \frac{\text{Var}(X)}{a^2}
+\]
+
+\subsection*{Example 5.1 (Running Example)}
+
+\begin{itemize}
+\item $( X \sim \text{Binomial}(n,1/2) )$
+\item $( \mu = n/2 )$
+\end{itemize}
+
+\[
+P(X > 3n/4) = P(|X - n/2| > n/4)
+\]
+\[
+< \frac{\text{Var}(X)}{(n/4)^2}
+\]
+
+\subsection*{Example 5.2 (Exam Scores)}
+
+\begin{itemize}
+\item Mean = 70
+\item Std deviation = 10
+\end{itemize}
+
+\[
+P(|X - 70| > 30) < \frac{10^2}{30^2} = \frac{1}{9}
+\]
+
+\section*{6. Chernoff Bound}
+
+\subsection*{Idea}
+
+\begin{itemize}
+\item Uses exponential transformation and Markov’s inequality
+\end{itemize}
+
+\subsection*{Lower Tail Derivation}
+
+Steps:
+
+\begin{enumerate}
+\item Choose $( t < 0 )$:
+\[
+P(X < a) = P(tX > ta)
+\]
+\item Exponentiate:
+\[
+P(e^{tX} > e^{ta})
+\]
+\item Apply Markov:
+\[
+P(e^{tX} > e^{ta}) < \frac{E[e^{tX}]}{e^{ta}}
+\]
+\item Minimize over $( t < 0 )$
+\end{enumerate}
+
+\textbf{Result:}
+\[
+P(X < a) < \min_{t<0} e^{-ta} E[e^{tX}]
+\]
+
+\section*{7. Jensen’s Inequality}
+
+\subsection*{Definition 7.1 (Convex Function)}
+
+A function $( g(x) )$ is convex on interval $( S )$ if for any $( x_1, x_2 \in S )$ and $( \alpha \in [0,1] )$,
+\[
+g(\alpha x_1 + (1-\alpha)x_2) < \alpha g(x_1) + (1-\alpha)g(x_2)
+\]
+
+\subsection*{Convex Combination}
+
+If $( \sum a_i = 1 )$,
+\[
+g\left(\sum a_i x_i\right) < \sum a_i g(x_i)
+\]
+
+\subsection*{Theorem 7.1 (Jensen’s Inequality)}
+
+If $( g(x) )$ is convex and $( X )$ takes values in its domain,
+\[
+g(E[X]) < E[g(X)]
+\]
+
+\subsection*{Interpretation}
+
+\begin{itemize}
+\item Average first $\Rightarrow$ smaller value
+\item Apply function first $\Rightarrow$ larger value
+\item Convex functions push expectation upwards
+\end{itemize}
+
+\subsection*{Solved Example 7.1}
+
+Let:
+
+\begin{itemize}
+\item $( X = 2 )$ with probability 0.5
+\item $( X = 4 )$ with probability 0.5
+\item $( g(x) = x^2 )$
+\end{itemize}
+
+Steps:
+
+\begin{enumerate}
+\item Compute expectation:
+\[
+E[X] = (2)(0.5) + (4)(0.5) = 3
+\]
+\item Left side:
+\[
+g(E[X]) = 3^2 = 9
+\]
+\item Distribution of $( g(X) )$:
+\begin{itemize}
+\item $( X^2 = 4 )$ with probability 0.5
+\item $( X^2 = 16 )$ with probability 0.5
+\end{itemize}
+\item Right side:
+\[
+E[g(X)] = (4)(0.5) + (16)(0.5) = 10
+\]
+\end{enumerate}
+
+\textbf{Result:}
+\[
+g(E[X]) = 9 < 10 = E[g(X)]
+\]
+
+\section*{8. System-Level Insight}
+
+\subsection*{Comparison of Inequalities}
+
+\begin{itemize}
+\item Markov: uses only average
+\item Chebyshev: uses average + variance
+\item Chernoff: uses full distribution
+\end{itemize}
+
+\subsection*{Final Principle}
+
+\textbf{More statistical information = Tighter bounds = Lower hardware costs}
+
+\section*{End of Scribe}
+
+\end{document}
