@@ -1,0 +1,277 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\title{Lecture Scribe — Inequalities (Tutorial Solutions)\\
+CSE 400: Fundamentals of Probability in Computing}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Definitions and Notation}
+
+Random variable $X \ge 0$, with expectation $E[X]$
+
+Mean: $\mu = E[X]$
+
+Variance: $\sigma^2 = \mathrm{Var}(X)$
+
+Moment Generating Function (MGF): $E[e^{tX}]$
+
+\textbf{Markov’s Inequality:}
+\[
+P(X \ge a) \le \frac{E[X]}{a}, \quad a > 0
+\]
+
+\textbf{Chebyshev’s Inequality:}
+\[
+P(|X - \mu| \ge a) \le \frac{\sigma^2}{a^2}
+\]
+
+\textbf{Jensen’s Inequality (convex $g$):}
+\[
+g(E[X]) \le E[g(X)]
+\]
+
+Convex function condition:
+\[
+g''(x) > 0
+\]
+
+\section*{Assumptions}
+
+\begin{itemize}
+\item Random variables are non-negative where required (Markov’s inequality)
+\item Finite mean and variance exist
+\item Independence of $X_i$ (in Q-7)
+\item Domain constraints: $0 \le Y \le 1$, $X > 0$
+\item Equal probability pairing (Q-8)
+\end{itemize}
+
+\section*{Theorems / Results}
+
+\[
+P(X \ge 120000) \le \frac{1}{3}
+\]
+
+\[
+P(\text{defective}) \le \frac{1}{9}
+\]
+
+\[
+E[e^{tY}] \le 1 - \mu + \mu e^t
+\]
+
+\[
+E[X^a] \ge (E[X])^a
+\]
+
+\[
+P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}
+\]
+
+\[
+P(|X - 500| < 100) \ge \frac{99}{100}
+\]
+
+\[
+E[e^{tX_i}] \le e^{t^2/2}, \quad E[e^{tS_n}] \le e^{nt^2/2}
+\]
+
+\[
+E[X] \approx 50.25, \quad \mathrm{Var}(X) \approx 25.126
+\]
+
+\[
+P(X \le 30) \le 0.061
+\]
+
+\[
+\sum_{k=1}^{n} (k^2 + 1) \ge \frac{n^2}{n^2 + 2n + 5}
+\]
+
+Bounds for Poisson(20):
+
+\[
+\text{Markov: } \le \frac{10}{13}, \quad
+\text{Chebyshev: } \le \frac{5}{14}, \quad
+\text{Chernoff: } \le e^{6 - 26 \ln(1.3)}
+\]
+
+\section*{Proofs / Derivations}
+
+\subsection*{Q-3}
+
+\[
+Y = (1 - Y)\cdot 0 + Y \cdot 1
+\]
+
+Using convexity:
+\[
+e^{tY} \le (1 - Y)e^0 + Ye^t
+\]
+
+Taking expectation:
+\[
+E[e^{tY}] \le E[1 - Y + Ye^t]
+\]
+
+\[
+E[e^{tY}] \le 1 - E[Y] + e^t E[Y]
+\]
+
+Let $E[Y] = \mu$:
+\[
+E[e^{tY}] \le 1 - \mu + \mu e^t
+\]
+
+\subsection*{Q-4}
+
+Let $g(x) = x^a$
+
+\[
+g'(x) = ax^{a-1}, \quad g''(x) = a(a-1)x^{a-2}
+\]
+
+Since $g''(x) > 0$, $g$ is convex.
+
+By Jensen:
+\[
+(E[X])^a \le E[X^a]
+\]
+
+\subsection*{Q-5}
+
+Let $Z = (X - \mu)^2$
+
+\[
+P(|X - \mu| \ge k\sigma) = P(Z \ge k^2\sigma^2)
+\]
+
+Using Markov:
+\[
+P(Z \ge k^2\sigma^2) \le \frac{E[Z]}{k^2\sigma^2}
+\]
+
+\[
+E[(X - \mu)^2] = \sigma^2
+\]
+
+\[
+P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}
+\]
+
+\subsection*{Q-7}
+
+\[
+E[e^{tX_i}] = \frac{e^t + e^{-t}}{2}
+\]
+
+Using expansion:
+\[
+e^t + e^{-t} = 2 \sum_{n=0}^{\infty} \frac{t^{2n}}{(2n)!}
+\]
+
+Using inequality:
+\[
+(2n)! \ge n! 2^n
+\]
+
+\[
+E[e^{tX_i}] \le e^{t^2/2}
+\]
+
+By independence:
+\[
+E[e^{tS_n}] = \prod E[e^{tX_i}] \le (e^{t^2/2})^n
+\]
+
+\subsection*{Q-8}
+
+\[
+X = \sum X_i
+\]
+
+\[
+E[X_i] = \frac{100}{199}
+\]
+
+\[
+E[X] = 100 \cdot \frac{100}{199}
+\]
+
+\[
+\mathrm{Var}(X) = \sum \mathrm{Var}(X_i) + 2 \sum \mathrm{Cov}(X_i, X_j)
+\]
+
+Using Chebyshev:
+\[
+P(|X - 50.25| \ge 20.25) \le \frac{25.126}{(20.25)^2}
+\]
+
+\subsection*{Q-10 (Chernoff)}
+
+\[
+E[e^{tX}] = \exp(20(e^t - 1))
+\]
+
+\[
+P(X \ge 26) \le \inf_{t>0} \exp(20(e^t - 1) - 26t)
+\]
+
+\[
+f'(t) = 20e^t - 26
+\]
+
+\[
+e^t = 1.3 \Rightarrow t = \ln(1.3)
+\]
+
+\section*{Worked Examples}
+
+\subsection*{Q-1}
+
+\[
+P(X \ge 120000) \le \frac{40000}{120000} = \frac{1}{3}
+\]
+
+\subsection*{Q-2}
+
+\[
+P(|X - 100| \ge 6) \le \frac{4}{36} = \frac{1}{9}
+\]
+
+Expected defective:
+\[
+10000 \cdot \frac{1}{9} \approx 1111
+\]
+
+\subsection*{Q-6}
+
+\[
+P(X \ge 1000) \le \frac{500}{1000} = \frac{1}{2}
+\]
+
+\[
+P(|X - 500| < 100) \ge 0.99
+\]
+
+\subsection*{Q-9}
+
+\[
+\frac{1}{n} \sum (k^2 + 1) \ge 1 + \left(\frac{n+1}{2}\right)^2
+\]
+
+\section*{Conclusion}
+
+\begin{itemize}
+\item Markov’s inequality bounds upper tail probabilities
+\item Chebyshev’s inequality bounds deviations from mean
+\item Jensen’s inequality applies to convex functions
+\item Chernoff bounds provide tighter exponential bounds
+\item MGF techniques used for probabilistic bounds
+\item Inequalities applied to expectation and variance computations
+\end{itemize}
+
+\end{document}
