@@ -1,0 +1,2 @@
+Prompt for lecture scribe 25:
+Generate the lecture scribe of these slides. List down all the formulas used in each question and in scribe include both questions and answers with the formulas and reason why they were used. Generate it as exam-oriented scribe only and do not add anything by yourself. 
