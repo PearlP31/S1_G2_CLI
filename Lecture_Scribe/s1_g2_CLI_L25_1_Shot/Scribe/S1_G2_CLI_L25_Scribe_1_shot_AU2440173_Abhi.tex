@@ -1,0 +1,146 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+
+\title{Formula Sheet Summary}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Inequalities}
+
+\textbf{Markov’s Inequality}
+\[
+P(X \ge a) \le \frac{E[X]}{a}, \quad a > 0
+\]
+\[
+P(Z \ge a) \le \frac{E[Z]}{a}, \quad Z > 0
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\textbf{Chebyshev’s Inequality}
+\[
+P(|X - \mu| \ge a) \le \frac{\sigma^2}{a^2}
+\]
+\[
+P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\textbf{One-sided Chebyshev (Cantelli)}
+\[
+P(X \ge \mu + t) \le \frac{\sigma^2}{\sigma^2 + t^2}
+\]
+\noindent\rule{\linewidth}{0.4pt}
+
+\textbf{Variance Definition}
+\[
+\mathrm{Var}(X) = E[(X - \mu)^2]
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\textbf{Linearity of Expectation}
+\[
+E[aX + bY] = aE[X] + bE[Y]
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\textbf{Convexity (General Form)}
+\[
+e^{\lambda x_1 + (1-\lambda)x_2} \le \lambda e^{x_1} + (1-\lambda)e^{x_2}, 
+\quad \lambda \in [0,1]
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\textbf{Jensen’s Inequality}
+\[
+g(E[X]) \le E[g(X)] \quad \text{(for convex } g)
+\]
+\[
+(E[X])^a \le E[X^a], \quad a > 1
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\section*{MGF (Moment Generating Function)}
+Definition:
+\[
+M_X(t) = E[e^{tX}]
+\]
+Poisson Distribution:
+\[
+E[e^{tX}] = \exp\left(\lambda (e^t - 1)\right)
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\section*{MGF Bounds (from series inequality)}
+
+\[
+E\left[e^{tX_i}\right] = \frac{e^t + e^{-t}}{2}
+\]
+
+\[
+E\left[e^{tX_i}\right] \le e^{t^2/2}
+\]
+
+\[
+E\left[e^{tS_n}\right] \le e^{nt^2/2}
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\section*{Chernoff Bound}
+
+\[
+P(X \ge a) \le \inf_{t>0} \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\[
+P(X \ge a) \le \inf_{t>0} \exp\left(\lambda (e^t - 1) - at\right)
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\textbf{Expectation and Variance (Indicator Variables)}
+\[
+E[X] = \sum_{i=1}^{n} E[X_i]
+\]
+
+\[
+\mathrm{Var}(X) = \sum_{i=1}^{n} \mathrm{Var}(X_i) + \sum_{i<j} \mathrm{Cov}(X_i, X_j)
+\]
+
+\[
+\mathrm{Var}(X_i) = p(1 - p)
+\]
+
+\[
+\mathrm{Cov}(X_i, X_j) = E[X_i X_j] - E[X_i]E[X_j]
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\section*{Probability Relations}
+
+\[
+P(|X - \mu| < a) \ge 1 - \frac{\sigma^2}{a^2}
+\]
+\noindent\rule{\linewidth}{0.4pt}
+
+\section*{Series Expansion}
+\[
+e^t = \sum_{n=0}^{\infty} \frac{t^n}{n!}
+\]
+
+\[
+e^{-t} = \sum_{n=0}^{\infty} \frac{(-t)^n}{n!}
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\textbf{Factorial Inequality}
+\[
+(2n)! \ge (n!)^2 2^n
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\section*{Summation Formula}
+
+\[
+1 + 2 + \cdots + n = \frac{n(n+1)}{2}
+\]
+\noindent\rule{\linewidth}{0.4pt}
+\section*{Algebraic Forms Used}
+\[
+|X - \mu| \ge a \;\Longleftrightarrow\; (X - \mu)^2 \ge a^2
+\]
+
+\[
+Y = (1 - Y)\cdot 0 + Y \cdot 1
+\]
+
+\end{document}
